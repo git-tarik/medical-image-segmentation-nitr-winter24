@@ -111,10 +111,10 @@ We compute both **threshold‑based metrics** (Dice, IoU) and **threshold‑free
 
 ### Qualitative
 <p align="center">
-  <img src="reports/figures/quick_eda_overlays.png" alt="Quick EDA overlays" width="85%"/>
+  <img src="figures/quick_eda_overlays.png" alt="Quick EDA overlays" width="85%"/>
 </p>
 <p align="center">
-  <img src="reports/figures/result_gallery.png" alt="Best/Worst/Random prediction gallery" width="85%"/>
+  <img src="figures/result_gallery.png" alt="Best/Worst/Random prediction gallery" width="85%"/>
 </p>
 
 > **Tip:** In the gallery, panels are grouped into **Top‑K Best**, **Worst**, and **Random** samples. Typical color code: *Green = TP*, *Yellow = FP*, *Cyan = FN*.
