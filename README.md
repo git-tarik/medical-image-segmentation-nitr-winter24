@@ -32,14 +32,73 @@
 - **Evaluation artifacts:** pixel-level confusion matrix, ROC (AUC), Precision-Recall (AP), Dice/IoU (per-image + aggregate), Dice/IoU vs threshold, coverage-vs-Dice, histograms/box-plots, and best/worst/random qualitative panels.
 - **Environment:** standard scientific Python (Jupyter + NumPy/Pandas + Matplotlib; add/adjust libraries to match your notebook).
 
-  ## flowchart LR
-    A[Inputs: images + masks] --> B[Preprocess\nresize • normalize • mask sanity checks]
-    B --> C[Augment\nflip • rotate • blur/jitter (as used)]
-    C --> D[Split\ndata → train / val / test]
-    D --> E[Train model\n(e.g., U-Net family)\nloss: Dice/BCE/Combo • optimizer • LR schedule]
-    E --> F[Inference\non val/test]
-    F --> G[Probability maps\n(per-pixel)]
-    G --> H[Threshold sweep\n0 → 1]
-    H --> I[Post-processing\nsmall-obj removal • hole fill (optional)]
-    I --> J[Metrics & Plots\nDice/IoU • Confusion • ROC/PR • Calibration • Panels]
+## Results Gallery
 
+> Exported from `med-seg.ipynb` so reviewers can scan results without running the notebook.
+
+<figure>
+  <img src="figures/figure_009.png" alt="Confusion matrix" width="100%">
+  <figcaption><b>Pixel-level confusion matrix (val)</b> — class balance and dominant error types.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_010.png" alt="ROC curve" width="100%">
+  <figcaption><b>ROC curve (val)</b> — threshold-free performance; AUC summarises separability.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_011.png" alt="Precision/Recall vs threshold" width="100%">
+  <figcaption><b>Precision & Recall vs threshold (val)</b> — operating-point trade-off across 0→1.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_006.png" alt="Per-image Dice histogram" width="100%">
+  <figcaption><b>Per-image Dice histogram (val)</b> — distribution of Dice across images.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_007.png" alt="Per-image IoU histogram" width="100%">
+  <figcaption><b>Per-image IoU histogram (val)</b> — overlap quality across images.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_008.png" alt="Coverage vs Dice" width="100%">
+  <figcaption><b>Coverage vs Dice (val)</b> — relation between mask size (coverage %) and Dice.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_003.png" alt="Dice by coverage bin" width="100%">
+  <figcaption><b>Dice by coverage bin (val)</b> — box-plots summarising performance by mask size.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_004.png" alt="Dice/IoU vs threshold" width="100%">
+  <figcaption><b>Dice/IoU vs threshold (val)</b> — pick a stable operating point.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_013.png" alt="Reliability diagram" width="100%">
+  <figcaption><b>Reliability diagram</b> — calibration check (ECE).</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_014.png" alt="Pixel probability distributions" width="100%">
+  <figcaption><b>Pixel probability distributions</b> — histograms for positive vs negative pixels.</figcaption>
+</figure>
+
+### Qualitative panels
+
+<figure>
+  <img src="figures/figure_015.png" alt="Worst 6 panel" width="100%">
+  <figcaption><b>Worst 6</b> — examples with low Dice; TP=green, FP=yellow, FN=cyan.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_016.png" alt="Best 6 panel" width="100%">
+  <figcaption><b>Best 6</b> — high-quality segmentations with strong boundary agreement.</figcaption>
+</figure>
+
+<figure>
+  <img src="figures/figure_005.png" alt="Random 6 panel" width="100%">
+  <figcaption><b>Random 6</b> — unbiased samples for quick visual audit.</figcaption>
+</figure>
