@@ -24,3 +24,67 @@ medical-image-segmentation-nitr-winter24/
 ├── LICENSE                 # MIT license
 ├── README.md               # Project documentation (this file)
 ```
+## ⚙️ Setup & Usage
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/git-tarik/medical-image-segmentation-nitr-winter24.git
+cd medical-image-segmentation-nitr-winter24
+```
+
+# create virtual environment
+python -m venv venv
+source venv/bin/activate   # (Linux/Mac)
+venv\Scripts\activate      # (Windows)
+
+# install dependencies
+pip install -r requirements.txt
+```
+data/
+└── Kvasir-SEG/
+    ├── images/        # original images
+    └── masks/         # corresponding segmentation masks
+```
+
+## 📊 Results & Visualizations
+
+This project reports both **quantitative metrics** (Dice, IoU, ROC-AUC, PR-AUC, calibration) and **qualitative visualizations** (best/worst/random predictions).  
+
+---
+
+### 🔢 Quantitative Metrics
+
+#### ✅ Confusion Matrix (Validation)
+<p align="center">
+  <img src="./reports/figure_03.png" width="400"/>
+</p>
+<p align="center"><em>Pixel-level confusion matrix on validation set — highlights dominant false positive/negative modes.</em></p>
+
+#### 📈 ROC Curve (Validation)
+<p align="center">
+  <img src="./reports/figure_04.png" width="400"/>
+</p>
+<p align="center"><em>Receiver Operating Characteristic curve (pixel-level). AUC summarises separability across thresholds.</em></p>
+
+#### 📊 Per-image Dice Histogram
+<p align="center">
+  <img src="./reports/figure_06.png" width="400"/>
+</p>
+<p align="center"><em>Distribution of per-image Dice scores — shows variance across images and highlights long-tail failures.</em></p>
+
+---
+
+### 🎨 Qualitative Results
+
+#### 🔍 Quick EDA (Overlay Samples)
+<p align="center">
+  <img src="./reports/figure_01.png" width="500"/>
+</p>
+<p align="center"><em>Visual sanity-check: input images with ground-truth masks and predicted overlays.</em></p>
+
+#### 🖼️ Result Gallery (Best / Worst / Random Predictions)
+<p align="center">
+  <img src="./reports/figure_02.png" width="600"/>
+</p>
+<p align="center"><em>Qualitative audit: Top-6 best, worst, and random predictions.  
+Green = True Positive, Yellow = False Positive, Cyan = False Negative.</em></p>
