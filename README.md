@@ -100,13 +100,13 @@ We compute both **threshold‑based metrics** (Dice, IoU) and **threshold‑free
 
 ### Quantitative
 <p align="center">
-  <img src="reports/figure_003.png" alt="Confusion matrix (validation)" width="75%"/>
+  <img src="figures/figure_003.png" alt="Confusion matrix (validation)" width="75%"/>
 </p>
 <p align="center">
-  <img src="reports/figure_004.png" alt="ROC curve (validation)" width="75%"/>
+  <img src="figures/figure_004.png" alt="ROC curve (validation)" width="75%"/>
 </p>
 <p align="center">
-  <img src="reports/figure_006.png" alt="Per‑image Dice histogram" width="75%"/>
+  <img src="figures/figure_006.png" alt="Per‑image Dice histogram" width="75%"/>
 </p>
 
 ### Qualitative
