@@ -14,7 +14,8 @@
 .
 ├─ med-seg.ipynb                        # main, reproducible notebook
 ├─ figures/                             # all plots auto-extracted from the notebook
-├─ reports/
-├─ data/                              
-├─ src/                                 
+├─ reports/                             # reports or artifacts (kept empty here)
+├─ data/                                # (optional) small samples if you add them
+├─ src/                                 # (optional) helper scripts later
 └─ README.md
+
