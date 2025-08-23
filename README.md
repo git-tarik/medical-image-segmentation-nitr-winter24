@@ -78,13 +78,14 @@ This project reports both **quantitative metrics** (Dice, IoU, ROC-AUC, PR-AUC, 
 
 #### 🔍 Quick EDA (Overlay Samples)
 <p align="center">
-  <img src="./reports/figure_01.png" width="500"/>
+  <img src="./reports/figures/quick_eda_overlays.png" width="500"/>
 </p>
 <p align="center"><em>Visual sanity-check: input images with ground-truth masks and predicted overlays.</em></p>
 
 #### 🖼️ Result Gallery (Best / Worst / Random Predictions)
 <p align="center">
-  <img src="./reports/figure_02.png" width="600"/>
+  <img src="./reports/figures/result_gallery.png" width="600"/>
 </p>
-<p align="center"><em>Qualitative audit: Top-6 best, worst, and random predictions.  
+<p align="center"><em>Qualitative audit showing representative predictions.  
+Panels are grouped into Top-6 best, worst, and random samples.  
 Green = True Positive, Yellow = False Positive, Cyan = False Negative.</em></p>
