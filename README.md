@@ -9,3 +9,12 @@
 > A clean, recruiter-friendly repository showcasing my medical image segmentation work completed during the Winter Internship at the **Department of Computer Science & Engineering, NIT Rourkela**.  
 > The project focuses on robust training pipelines, clear evaluation (Dice/IoU), and reproducible visuals.
 
+
+### Repo map
+.
+├─ med-seg.ipynb                        # main, reproducible notebook
+├─ figures/                             # all plots auto-extracted from the notebook
+├─ reports/
+├─ data/                              
+├─ src/                                 
+└─ README.md
