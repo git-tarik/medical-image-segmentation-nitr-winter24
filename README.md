@@ -9,4 +9,3 @@
 > A clean, recruiter-friendly repository showcasing my medical image segmentation work completed during the Winter Internship at the **Department of Computer Science & Engineering, NIT Rourkela**.  
 > The project focuses on robust training pipelines, clear evaluation (Dice/IoU), and reproducible visuals.
 
-*Scroll down for the **Results Gallery** and **Dataset Samples** — they’re placed below the introduction for a cleaner first impression.*
