@@ -1,104 +1,62 @@
 # Optimizing Deep Learning Models for Accurate & Robust Medical Image Segmentation
-**NIT Rourkela – Winter Internship (Dec 2024 – Feb 2025)**
+*Project completed during a Winter Internship at NIT Rourkela*
 
-![Made with Jupyter](https://img.shields.io/badge/Made%20with-Jupyter-orange)
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
-![License](https://img.shields.io/badge/License-MIT-green)
-![NIT Rourkela](https://img.shields.io/badge/NIT%20Rourkela-Winter%20Internship-ff8c00)
+<p align="center">
+  <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white"></a>
+  <a href="https://pytorch.org/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white"></a>
+  <a href="https://lightning.ai/"><img alt="PyTorch Lightning" src="https://img.shields.io/badge/Lightning-792EE5?logo=lightning&logoColor=white"></a>
+  <a href="https://github.com/qubvel/segmentation_models.pytorch"><img alt="segmentation-models-pytorch" src="https://img.shields.io/badge/segmentation--models--pytorch-smp-2F855A"></a>
+  <a href="./med-seg.ipynb"><img alt="Made with Jupyter" src="https://img.shields.io/badge/Made%20with-Jupyter-F37626?logo=jupyter&logoColor=white"></a>
+  <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-000000.svg"></a>
+</p>
 
-> A clean, recruiter-friendly repository showcasing my medical image segmentation work completed during the Winter Internship at the **Department of Computer Science & Engineering, NIT Rourkela**.  
-> The project focuses on robust training pipelines, clear evaluation (Dice/IoU), and reproducible visuals.
+> Reproducible PyTorch Lightning pipeline for medical image segmentation (Kvasir-SEG), 
+> with strong training setup, clear metrics (Dice/IoU, ROC-AUC, PR-AUC), and clean qualitative panels.
 
+## Highlights
 
-### Repo map
+- **Task:** Medical Image Segmentation on **Kvasir-SEG** (polyps) with strong quantitative + qualitative evaluation.
+- **Model:** `UNet(resnet34 encoder)` via `segmentation_models_pytorch`.
+- **Training:** PyTorch Lightning (`mixed-precision`, `AdamW`, cosine LR schedule, early stopping, checkpoints).
+- **Augmentations:** Resize → HorizontalFlip → ShiftScaleRotate → Brightness/Contrast → GaussNoise → Normalize (Albumentations).
+- **Metrics & Analysis:** Dice & IoU (per-image + aggregate), ROC–AUC, PR–AUC, threshold sweeps, calibration (ECE), coverage vs Dice, best/worst/random panels.
+- **Reproducibility:** All steps kept inside `med-seg.ipynb`; outputs auto-saved to `outputs/` as figures and overlays.
+
+## Repo Map
 ```
-├─ med-seg.ipynb                        # main, reproducible notebook
-├─ figures/                             # all plots auto-extracted from the notebook
-├─ reports/                             # reports or artifacts (kept empty here)
-├─ data/                                # (optional) small samples if you add them
-├─ src/                                 # (optional) helper scripts later
-└─ README.md
-
+medical-image-segmentation-nitr-winter24/
+├─ med-seg.ipynb # main, reproducible notebook
+├─ figures/ # exported plots & panels (for README/gallery)
+├─ reports/ # (placeholder for pdfs/notes if needed)
+├─ data/ # (optional) local samples / CSV splits
+├─ src/ # (optional) helper scripts (future growth)
+├─ README.md # you are here
+└─ LICENSE # MIT
 ```
-## At a glance
+## Dataset & Preprocessing
 
-- **Objective:** Medical image segmentation with clear, reproducible evaluation.
-- **Scope:** End-to-end workflow — preprocessing → training → inference → analysis — contained in `med-seg.ipynb`.
-- **Repo contents:**  
-  - Notebook: `med-seg.ipynb`  
-  - Visuals: `figures/` (all plots saved from the notebook)  
-  - Placeholders: `reports/`, `data/`, `src/`
-- **Preprocessing:** resizing/normalization; basic mask checks (as implemented in the notebook).
-- **Evaluation artifacts:** pixel-level confusion matrix, ROC (AUC), Precision-Recall (AP), Dice/IoU (per-image + aggregate), Dice/IoU vs threshold, coverage-vs-Dice, histograms/box-plots, and best/worst/random qualitative panels.
-- **Environment:** standard scientific Python (Jupyter + NumPy/Pandas + Matplotlib; add/adjust libraries to match your notebook).
+**Dataset:** [Kvasir-SEG] — 1,000 gastrointestinal polyp images with expert-annotated masks (binary segmentation). Images vary from ~332×487 to 1920×1072.  
 
-## Results Gallery
+**How the notebook gets data**
+- Tries to detect Kvasir-SEG under `/kaggle/input/…`.
+- If missing, downloads `kvasir-seg.zip` and unzips to `/kaggle/working/medseg/data/Kvasir-SEG/`.
+- Auto-detects `images/` and `masks/` folders and verifies counts.
 
-> Exported from `med-seg.ipynb` so reviewers can scan results without running the notebook.
+**Pairs & splits (CSV)**
+- Pairs image↔mask by stem into `pairs.csv`.
+- Computes a simple mask **coverage** (% of positive pixels) and a boolean **has_polyp**.
+- Creates stratified **train/val** CSVs (`train.csv`, `val.csv`) while preserving the has_polyp distribution.
 
-<figure>
-  <img src="figures/figure_009.png" alt="Confusion matrix" width="100%">
-  <figcaption><b>Pixel-level confusion matrix (val)</b> — class balance and dominant error types.</figcaption>
-</figure>
+**Augmentations & normalization (Albumentations)**
+- `Resize(256, 256)`
+- `HorizontalFlip(p=0.5)`, `RandomRotate90(p=0.25)`
+- `ShiftScaleRotate(shift_limit=0.02, scale_limit=0.1, rotate_limit=15, border_mode=REFLECT_101, p=0.4)`
+- `RandomBrightnessContrast(p=0.3)`, `GaussNoise(var_limit=(5, 20), p=0.2)`
+- `Normalize(mean=(0.485,0.456,0.406), std=(0.229,0.224,0.225))`
+- `ToTensorV2()`
 
-<figure>
-  <img src="figures/figure_010.png" alt="ROC curve" width="100%">
-  <figcaption><b>ROC curve (val)</b> — threshold-free performance; AUC summarises separability.</figcaption>
-</figure>
+**Validation preprocessing**
+- `Resize(256, 256)` → `Normalize` → `ToTensorV2()` (no heavy augs)
 
-<figure>
-  <img src="figures/figure_011.png" alt="Precision/Recall vs threshold" width="100%">
-  <figcaption><b>Precision & Recall vs threshold (val)</b> — operating-point trade-off across 0→1.</figcaption>
-</figure>
+**Directory layout (after setup)**
 
-<figure>
-  <img src="figures/figure_006.png" alt="Per-image Dice histogram" width="100%">
-  <figcaption><b>Per-image Dice histogram (val)</b> — distribution of Dice across images.</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_007.png" alt="Per-image IoU histogram" width="100%">
-  <figcaption><b>Per-image IoU histogram (val)</b> — overlap quality across images.</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_008.png" alt="Coverage vs Dice" width="100%">
-  <figcaption><b>Coverage vs Dice (val)</b> — relation between mask size (coverage %) and Dice.</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_003.png" alt="Dice by coverage bin" width="100%">
-  <figcaption><b>Dice by coverage bin (val)</b> — box-plots summarising performance by mask size.</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_004.png" alt="Dice/IoU vs threshold" width="100%">
-  <figcaption><b>Dice/IoU vs threshold (val)</b> — pick a stable operating point.</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_013.png" alt="Reliability diagram" width="100%">
-  <figcaption><b>Reliability diagram</b> — calibration check (ECE).</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_014.png" alt="Pixel probability distributions" width="100%">
-  <figcaption><b>Pixel probability distributions</b> — histograms for positive vs negative pixels.</figcaption>
-</figure>
-
-### Qualitative panels
-
-<figure>
-  <img src="figures/figure_015.png" alt="Worst 6 panel" width="100%">
-  <figcaption><b>Worst 6</b> — examples with low Dice; TP=green, FP=yellow, FN=cyan.</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_016.png" alt="Best 6 panel" width="100%">
-  <figcaption><b>Best 6</b> — high-quality segmentations with strong boundary agreement.</figcaption>
-</figure>
-
-<figure>
-  <img src="figures/figure_005.png" alt="Random 6 panel" width="100%">
-  <figcaption><b>Random 6</b> — unbiased samples for quick visual audit.</figcaption>
-</figure>
