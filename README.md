@@ -11,7 +11,7 @@
 
 
 ### Repo map
-.
+```
 ├─ med-seg.ipynb                        # main, reproducible notebook
 ├─ figures/                             # all plots auto-extracted from the notebook
 ├─ reports/                             # reports or artifacts (kept empty here)
@@ -19,3 +19,4 @@
 ├─ src/                                 # (optional) helper scripts later
 └─ README.md
 
+```
