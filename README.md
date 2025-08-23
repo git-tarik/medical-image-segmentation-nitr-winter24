@@ -3,10 +3,6 @@
 > Winter Internship @ **NIT Rourkela** (Dec 2024–Feb 2025). Reproducible **PyTorch Lightning** pipeline for medical image segmentation (Kvasir‑SEG), with strong training setup, clear metrics (Dice/IoU, ROC‑AUC, PR‑AUC), and clean qualitative panels.
 
 <p align="center">
-  <img src="reports/figures/quick_eda_overlays.png" alt="Quick EDA overlays of images, ground truth and predictions" width="85%"/>
-</p>
-
-<p align="center">
   <a href="https://www.python.org/"><img alt="Python" src="https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white"></a>
   <a href="https://pytorch.org/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-LTS-EE4C2C?logo=pytorch&logoColor=white"></a>
   <a href="https://lightning.ai/"><img alt="PyTorch Lightning" src="https://img.shields.io/badge/Lightning-2.x-792EE5?logo=lightning&logoColor=white"></a>
