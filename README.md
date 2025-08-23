@@ -20,3 +20,14 @@
 └─ README.md
 
 ```
+## At a glance
+
+- **Objective:** Medical image segmentation with clear, reproducible evaluation.
+- **Scope:** End-to-end workflow — preprocessing → training → inference → analysis — contained in `med-seg.ipynb`.
+- **Repo contents:**  
+  - Notebook: `med-seg.ipynb`  
+  - Visuals: `figures/` (all plots saved from the notebook)  
+  - Placeholders: `reports/`, `data/`, `src/`
+- **Preprocessing:** resizing/normalization; basic mask checks (as implemented in the notebook).
+- **Evaluation artifacts:** pixel-level confusion matrix, ROC (AUC), Precision-Recall (AP), Dice/IoU (per-image + aggregate), Dice/IoU vs threshold, coverage-vs-Dice, histograms/box-plots, and best/worst/random qualitative panels.
+- **Environment:** standard scientific Python (Jupyter + NumPy/Pandas + Matplotlib; add/adjust libraries to match your notebook).
